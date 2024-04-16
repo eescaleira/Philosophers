@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:57:14 by eescalei          #+#    #+#             */
-/*   Updated: 2024/04/12 12:53:09 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/04/16 17:38:30 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,10 @@ struct s_table
 	t_philo		*philo;
 };
 
+/* input parsing */
+int parsing_input(t_table *table, char **av);
+
+/* suport_funcs */
+int	ft_atoi(const char *str);
 
 #endif
