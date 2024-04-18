@@ -26,7 +26,5 @@ int main(int ac, char **av)
 		//clean
 	}
 	else
-	{
-		//error exit "wrong input"
-	}
+		exit_error(NULL);//error exit "wrong input"
 }
