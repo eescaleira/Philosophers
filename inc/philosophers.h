@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:57:14 by eescalei          #+#    #+#             */
-/*   Updated: 2024/04/17 16:28:13 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/05/16 18:17:23 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
  # include <unistd.h>
  # include <stddef.h>
  # include <stdlib.h>
+ # include <errno.h>
  # include <pthread.h>
  # include <string.h>
  # include <limits.h>
@@ -27,12 +28,24 @@
  # include <sys/types.h>
  # include <sys/wait.h>
 
+typedef pthread_mutex_t t_mtx;
 typedef struct s_table t_table;
+
+typedef enum e_opcode
+{
+	LOCK,
+	UNLOCK,
+	INIT,
+	DESTROY,
+	CREATE,
+	JOIN,
+	DETACH
+}	t_opcode;
 
 typedef struct
 {
 	int 			fork_id;
-	pthread_mutex_t	fork;
+	t_mtx			fork;
 }		t_fork;
 
 typedef struct s_philo
@@ -61,11 +74,11 @@ struct s_table
 };
 
 /* input parsing */
-char	*valid_input(const char *str);
+int	valid_input(const char *str);
 int parsing_input(t_table *table, char **av);
 
 /* suport_funcs */
-int	ft_atoi(const char *str);
+void	*safe_malloc(size_t size);
 
 /* exit */
 void	exit_error(char *str);
