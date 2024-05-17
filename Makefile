@@ -8,6 +8,8 @@ SRC = main.c \
 		exit_errors.c \
 		innit_structs.c \
 		meal.c \
+		get_set.c \
+		sync_utils.c
 
 SRC_PATH = ./src/
 OBJ_PATH = ./obj/

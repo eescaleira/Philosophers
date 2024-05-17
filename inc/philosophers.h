@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:57:14 by eescalei          #+#    #+#             */
-/*   Updated: 2024/05/17 14:31:40 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/05/17 16:43:00 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
  # include <fcntl.h>
  # include <sys/types.h>
  # include <sys/wait.h>
+ # include <sys/time.h>
 
 typedef pthread_mutex_t t_mtx;
 typedef struct s_table t_table;
@@ -91,6 +92,9 @@ bool get_bool(t_mtx *mutex, bool *src);
 long get_long(t_mtx *mutex, long int *src);
 void set_long(t_mtx *mutex, long int *dest, long int value);
 bool simulation_finished(t_table *table);
+
+/* sync utils */
+void	wait_all_thread_ready(t_table *table);
 
 /* suport_funcs */
 void	*safe_malloc(size_t size);
