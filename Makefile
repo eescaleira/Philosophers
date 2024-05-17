@@ -5,7 +5,9 @@ FLAGS = #-Wall -Wextra -Werror
 SRC = main.c \
 		parsing.c \
 		suport_funcs.c \
-		exit_errors.c 
+		exit_errors.c \
+		innit_structs.c \
+		meal.c \
 
 SRC_PATH = ./src/
 OBJ_PATH = ./obj/

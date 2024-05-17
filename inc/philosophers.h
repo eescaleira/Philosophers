@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:57:14 by eescalei          #+#    #+#             */
-/*   Updated: 2024/05/16 18:17:23 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/05/17 14:31:40 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ typedef struct s_philo
 	bool 		full;
 	long int 	meals_counter;
 	long int 	last_meal_time;
-	t_fork 		*left_fork;		/* first element of forks array */
-	t_fork 		*right_fork;	/* last element of forks array */
+	t_fork 		*first_fork;		/* first element of forks array */
+	t_fork 		*second_fork;	/* last element of forks array */
 	pthread_t 	thread_id;
 	t_table		*table;
 }		t_philo;
@@ -69,6 +69,8 @@ struct s_table
 	long int	nbr_limit_meals;
 	long int	start_simulation;
 	bool		end_simulation;
+	bool		all_thread_ready;
+	t_mtx 		table_mtx;
 	t_fork		*forks;
 	t_philo		*philo;
 };
@@ -77,8 +79,23 @@ struct s_table
 int	valid_input(const char *str);
 int parsing_input(t_table *table, char **av);
 
+/* struct init */
+void innit_struct(t_table *table);
+
+/* meal simulation */
+void	meal_start(t_table *table);
+
+/* setters & geteers */
+void set_bool(t_mtx *mutex, bool *dest, bool value);
+bool get_bool(t_mtx *mutex, bool *src);
+long get_long(t_mtx *mutex, long int *src);
+void set_long(t_mtx *mutex, long int *dest, long int value);
+bool simulation_finished(t_table *table);
+
 /* suport_funcs */
 void	*safe_malloc(size_t size);
+void safe_mutex_handle(t_mtx *mutex, t_opcode opcode);
+void safe_thread_handle(pthread_t *thread, void *(start_routine)(void *), void *arg, t_opcode opcode);
 
 /* exit */
 void	exit_error(char *str);
