@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:55:09 by eescalei          #+#    #+#             */
-/*   Updated: 2024/05/17 16:26:00 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/05/18 14:04:37 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ void	meal_start(t_table *table)
 	else
 		while(i++ < table->philo_nbr)
 			safe_thread_handle(&table->philo[i].thread_id, meal_simulation, &table->philo[i], CREATE);
+	
+	table->start_simulation = gettime(MILLISECONDS);
 	set_bool(&table->table_mtx, &table->all_thread_ready, true);
 	
 			

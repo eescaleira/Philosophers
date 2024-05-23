@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:57:14 by eescalei          #+#    #+#             */
-/*   Updated: 2024/05/17 16:43:00 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/05/23 14:23:04 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,13 @@ typedef enum e_opcode
 	DETACH
 }	t_opcode;
 
+typedef enum e_time_code
+{
+	SECONDS,
+	MILLISECONDS,
+	MICROSECONDS
+}	t_time_code;
+
 typedef struct
 {
 	int 			fork_id;
@@ -74,7 +81,7 @@ struct s_table
 	t_mtx 		table_mtx;
 	t_fork		*forks;
 	t_philo		*philo;
-};
+}	t_table;
 
 /* input parsing */
 int	valid_input(const char *str);
@@ -95,6 +102,7 @@ bool simulation_finished(t_table *table);
 
 /* sync utils */
 void	wait_all_thread_ready(t_table *table);
+long	gettime(t_time_code time_code);
 
 /* suport_funcs */
 void	*safe_malloc(size_t size);
