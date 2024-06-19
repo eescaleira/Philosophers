@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:29:23 by eescalei          #+#    #+#             */
-/*   Updated: 2024/05/18 14:03:12 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/06/19 22:37:36 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,28 @@ long	gettime(t_time_code time_code)
 	return (0);
 }
 
+void	precise_usleep(long usec, t_table *table)
+{
+	long	start;
+	long	elapsed;
+	long	rem;
+
+	start = gettime(MICROSECONDS);
+	while(gettime(MICROSECONDS) - start < usec)
+	{
+		if(simulation_finished(table))
+			break ;
+		elapsed = gettime(MICROSECONDS) - start;
+		rem = usec - elapsed;
+		if(rem > 1e3)
+			usleep(rem / 2);
+		else
+			while (gettime(MICROSECONDS) - start < usec);		
+	}
+}
+
 void	wait_all_thread_ready(t_table *table)
 {
-	while(get_bool(&table->table_mtx, &table->all_thread_ready))
-		;
+	while(get_bool(&table->table_mtx, &table->all_thread_ready));
+	
 }

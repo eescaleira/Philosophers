@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:57:14 by eescalei          #+#    #+#             */
-/*   Updated: 2024/05/23 14:23:04 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/06/19 23:28:13 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@
  # include <sys/time.h>
 
 typedef pthread_mutex_t t_mtx;
-typedef struct s_table t_table;
+// typedef struct s_table t_table;
+
 
 typedef enum e_opcode
 {
@@ -42,6 +43,16 @@ typedef enum e_opcode
 	JOIN,
 	DETACH
 }	t_opcode;
+
+typedef enum e_status
+{
+	EATING,
+	THINKING,
+	SLEEPING,
+	TAKING_FIRST_FORK,
+	TAKING_SECOND_FORK,
+	DIED
+}	t_philo_status;
 
 typedef enum e_time_code
 {
@@ -68,7 +79,7 @@ typedef struct s_philo
 	t_table		*table;
 }		t_philo;
 
-struct s_table
+typedef struct s_table
 {
 	long int	philo_nbr;
 	long int	time_to_die;
@@ -79,6 +90,7 @@ struct s_table
 	bool		end_simulation;
 	bool		all_thread_ready;
 	t_mtx 		table_mtx;
+	t_mtx		print_mtx;
 	t_fork		*forks;
 	t_philo		*philo;
 }	t_table;
@@ -103,6 +115,7 @@ bool simulation_finished(t_table *table);
 /* sync utils */
 void	wait_all_thread_ready(t_table *table);
 long	gettime(t_time_code time_code);
+void	precise_usleep(long usec, t_table *table);
 
 /* suport_funcs */
 void	*safe_malloc(size_t size);
