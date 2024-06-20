@@ -9,7 +9,8 @@ SRC = main.c \
 		innit_structs.c \
 		meal.c \
 		get_set.c \
-		sync_utils.c
+		sync_utils.c \
+		philo_acts.c
 
 SRC_PATH = ./src/
 OBJ_PATH = ./obj/
@@ -27,3 +28,11 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c | $(OBJ_PATH)
 
 $(OBJ_PATH):
 	mkdir -p $(OBJ_PATH)
+
+clean:
+	rm -rf $(OBJS)
+
+fclean: clean
+	rm -rf $(NAME)
+
+re: fclean all

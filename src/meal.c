@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:55:09 by eescalei          #+#    #+#             */
-/*   Updated: 2024/06/19 22:39:14 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/06/20 02:11:13 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,11 @@ void meal_simulation(void *data)
 	wait_all_thread_ready(philo->table);
 	while(!simulation_finished(philo->table))
 	{
-		if(!philo->full)
-			//eat
-			
-			//think
-			//sleep
-			
+		if(philo->full)
+			break ;
+		eat(philo);
+		// sleep(philo);
+		think(philo);	
 	}
 
 	return ;

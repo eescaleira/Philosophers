@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:57:14 by eescalei          #+#    #+#             */
-/*   Updated: 2024/06/19 23:28:13 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/06/20 02:18:39 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,10 @@
  # include <sys/wait.h>
  # include <sys/time.h>
 
-typedef pthread_mutex_t t_mtx;
-// typedef struct s_table t_table;
+#define TIME_TO_THINK 1e3
 
+typedef pthread_mutex_t t_mtx;
+typedef struct s_table t_table;
 
 typedef enum e_opcode
 {
@@ -76,6 +77,7 @@ typedef struct s_philo
 	t_fork 		*first_fork;		/* first element of forks array */
 	t_fork 		*second_fork;	/* last element of forks array */
 	pthread_t 	thread_id;
+	t_mtx		philo_mtx;
 	t_table		*table;
 }		t_philo;
 
@@ -104,6 +106,11 @@ void innit_struct(t_table *table);
 
 /* meal simulation */
 void	meal_start(t_table *table);
+void 	meal_simulation(void *data);
+
+/* meal actions */
+void eat(t_philo *philo);
+void think(t_philo *philo);
 
 /* setters & geteers */
 void set_bool(t_mtx *mutex, bool *dest, bool value);
@@ -121,6 +128,7 @@ void	precise_usleep(long usec, t_table *table);
 void	*safe_malloc(size_t size);
 void safe_mutex_handle(t_mtx *mutex, t_opcode opcode);
 void safe_thread_handle(pthread_t *thread, void *(start_routine)(void *), void *arg, t_opcode opcode);
+void 	write_status(t_philo *philo, t_philo_status status);
 
 /* exit */
 void	exit_error(char *str);

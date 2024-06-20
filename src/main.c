@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:09:30 by eescalei          #+#    #+#             */
-/*   Updated: 2024/05/17 12:46:54 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/06/20 02:19:40 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,9 @@ int main(int ac, char **av)
 	t_table table;
 	if( 5 == ac || 6 == ac)
 	{
-		//parse
 		parsing_input(&table, av);
-		//innit
 		innit_struct(&table);
-		//dinner
+		meal_start(&table);		
 		//clean
 	}
 	else
