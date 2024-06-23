@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:57:14 by eescalei          #+#    #+#             */
-/*   Updated: 2024/06/22 15:02:23 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/06/23 17:54:50 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct s_table
 	long int	time_to_sleep;
 	long int	nbr_limit_meals;
 	long int	start_simulation;
+	long int	threads_running;
 	bool		end_simulation;
 	bool		all_thread_ready;
 	pthread_t	monitoring_thread;
@@ -120,16 +121,18 @@ bool get_bool(t_mtx *mutex, bool *src);
 long get_long(t_mtx *mutex, long int *src);
 void set_long(t_mtx *mutex, long int *dest, long int value);
 bool simulation_finished(t_table *table);
+void	increase_long(t_mtx *mutex, long *value);
 
 /* sync utils */
+bool	all_threads_running(t_mtx *mutex, long *threads, long filo_nbr);
 void	wait_all_thread_ready(t_table *table);
 long	gettime(t_time_code time_code);
 void	precise_usleep(long usec, t_table *table);
 
 /* suport_funcs */
 void	*safe_malloc(size_t size);
-void safe_mutex_handle(t_mtx *mutex, t_opcode opcode);
-void safe_thread_handle(pthread_t *thread, void *(start_routine)(void *), void *arg, t_opcode opcode);
+void	safe_mutex_handle(t_mtx *mutex, t_opcode opcode);
+void	safe_thread_handle(pthread_t *thread, void *(*start_routine)(void *), void *arg, t_opcode opcode);
 void 	write_status(t_philo *philo, t_philo_status status);
 
 /* exit */

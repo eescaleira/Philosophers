@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:38:52 by eescalei          #+#    #+#             */
-/*   Updated: 2024/06/20 20:53:50 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/06/23 17:55:16 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void innit_struct(t_table *table)
 	table->philo = (t_philo *)safe_malloc(sizeof(t_philo) * table->philo_nbr);
 	safe_mutex_handle(&table->table_mtx, INIT);
 	safe_mutex_handle(&table->print_mtx, INIT);
+	table->threads_running = 0;
 	table->forks = (t_fork *)safe_malloc(sizeof(t_fork) * table->philo_nbr);
 	while(i < table->philo_nbr)
 	{

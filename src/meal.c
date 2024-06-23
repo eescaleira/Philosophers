@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 13:55:09 by eescalei          #+#    #+#             */
-/*   Updated: 2024/06/22 15:02:44 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/06/23 17:55:25 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ void *meal_simulation(void *data)
 	philo = (t_philo *)data;
 	printf("philo %d is thinking\n", philo->philo_id);
 	wait_all_thread_ready(philo->table);
+	increase_long(&philo->table->table_mtx, &philo->table->threads_running);
 	while(!simulation_finished(philo->table))
 	{
 		if(philo->full)
@@ -45,7 +46,7 @@ void	meal_start(t_table *table)
 			safe_thread_handle(&table->philo[i].thread_id, meal_simulation, &table->philo[i], CREATE);
 			i++;
 		}
-	safe_thread_handle(&table->monitoring_thread, monitoring, table, CREATE);
+	// safe_thread_handle(&table->monitoring_thread, monitoring, table, CREATE);
 	table->start_simulation = gettime(MILLISECONDS);
 	set_bool(&table->table_mtx, &table->all_thread_ready, true);
 	i = 0;
