@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:27:31 by eescalei          #+#    #+#             */
-/*   Updated: 2024/05/23 19:07:44 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/06/20 19:51:33 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void handle_thread_error(int status, t_opcode opcode)
 	else if(EDEADLK == status)
 		exit_error("A deadlock was detected or the value of thread specifies the calling thread");
 }
-void safe_thread_handle(pthread_t *thread, void *(start_routine)(void *), void *arg, t_opcode opcode)
+void safe_thread_handle(pthread_t *thread, void *(*start_routine)(void *), void *arg, t_opcode opcode)
 {
 	if(CREATE == opcode)
 		handle_mutex_error(pthread_create(thread, NULL, start_routine, arg), opcode);

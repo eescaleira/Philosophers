@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/17 16:29:23 by eescalei          #+#    #+#             */
-/*   Updated: 2024/06/19 22:37:36 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/06/20 20:14:30 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ long	gettime(t_time_code time_code)
 {
 	struct timeval	time;
 	
-	if(gettimeofday(&time, NULL));
+	if(gettimeofday(&time, NULL))
 		exit_error("gettimeofday error");
 	if(SECONDS == time_code)
 		return (time.tv_sec + (time.tv_usec / 1e6));
@@ -51,6 +51,5 @@ void	precise_usleep(long usec, t_table *table)
 
 void	wait_all_thread_ready(t_table *table)
 {
-	while(get_bool(&table->table_mtx, &table->all_thread_ready));
-	
+	while(!get_bool(&table->table_mtx, &table->all_thread_ready));
 }

@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:22:12 by eescalei          #+#    #+#             */
-/*   Updated: 2024/06/19 23:32:14 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/06/20 20:54:52 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,11 @@ void 	write_status(t_philo *philo, t_philo_status status)
 		printf("%ld %d has taken a fork\n", elapsed, philo->philo_id);
 	else
 		printf("invalid status code\n");
+	safe_mutex_handle(&philo->table->print_mtx, UNLOCK);
 }
 
 void	exit_error(char *str)
 {
-	
+	printf("Error: %s\n", str);
 	exit(1);
 }

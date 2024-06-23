@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:38:52 by eescalei          #+#    #+#             */
-/*   Updated: 2024/05/17 14:19:31 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/06/20 20:53:50 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,30 +29,43 @@ static	void assign_forks(t_philo *philo, t_fork *forks, int philo_position)
 	}
 }
 
-void innit_struct(t_table *table)
+void innit_philo(t_table *table)
 {
 	int i;
 	t_philo *philo;
-
+	
+	philo = table->philo;
 	i = 0;
-	table->start_simulation = false;
-	table->all_thread_ready = false;
-	table->philo = safe_malloc(sizeof(t_philo) * table->philo_nbr);
-	table->forks = safe_malloc(sizeof(t_fork) * table->philo_nbr);
-	while(i++ < table->philo_nbr)
+	while(table->philo_nbr > i )
 	{
-		safe_mutex_handle(&table->forks[i].fork, INIT);
-		table->forks->fork_id = i;
-	}
-	i = 0;
-	while(i++ < table->philo_nbr)
-	{
-		philo = table->philo + i;
 		philo->philo_id = i + 1;
 		philo->full = false;
 		philo->meals_counter = 0;
 		philo->table = table;
-		assign_forks(philo, table->forks, i);
+		safe_mutex_handle(&philo->philo_mtx, INIT);
+ 		assign_forks(philo, table->forks, i);	
+		philo++;
+		i++;
 	}
-		
+}
+
+void innit_struct(t_table *table)
+{
+	int i;
+
+	i = 0;
+	table->start_simulation = false;
+	table->all_thread_ready = false;
+	table->philo = (t_philo *)safe_malloc(sizeof(t_philo) * table->philo_nbr);
+	safe_mutex_handle(&table->table_mtx, INIT);
+	safe_mutex_handle(&table->print_mtx, INIT);
+	table->forks = (t_fork *)safe_malloc(sizeof(t_fork) * table->philo_nbr);
+	while(i < table->philo_nbr)
+	{
+		safe_mutex_handle(&table->forks[i].fork, INIT);
+		table->forks->fork_id = i;
+		i++;
+	}
+	innit_philo(table);
+	
 }

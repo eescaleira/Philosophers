@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:57:14 by eescalei          #+#    #+#             */
-/*   Updated: 2024/06/20 02:18:39 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/06/22 15:02:23 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,9 @@ typedef struct
 typedef struct s_philo
 {
 	int 		philo_id;
-	bool 		full;
 	long int 	meals_counter;
 	long int 	last_meal_time;
+	bool 		full;
 	t_fork 		*first_fork;		/* first element of forks array */
 	t_fork 		*second_fork;	/* last element of forks array */
 	pthread_t 	thread_id;
@@ -91,6 +91,7 @@ typedef struct s_table
 	long int	start_simulation;
 	bool		end_simulation;
 	bool		all_thread_ready;
+	pthread_t	monitoring_thread;
 	t_mtx 		table_mtx;
 	t_mtx		print_mtx;
 	t_fork		*forks;
@@ -106,11 +107,12 @@ void innit_struct(t_table *table);
 
 /* meal simulation */
 void	meal_start(t_table *table);
-void 	meal_simulation(void *data);
+void 	*meal_simulation(void *data);
 
 /* meal actions */
 void eat(t_philo *philo);
 void think(t_philo *philo);
+void sleep_philo(t_philo *philo);
 
 /* setters & geteers */
 void set_bool(t_mtx *mutex, bool *dest, bool value);
