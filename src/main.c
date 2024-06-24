@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 14:09:30 by eescalei          #+#    #+#             */
-/*   Updated: 2024/06/20 19:18:54 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/06/24 20:04:40 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,10 @@ int main(int ac, char **av)
 	{
 		parsing_input(&table, av);
 		innit_struct(&table);
-
 		meal_start(&table);		
-		//clean
+		clean(&table);
 	}
 	else
-		exit_error(NULL);//error exit "wrong input"
+		printf("Wrong input\n");
 	return (0);
 }

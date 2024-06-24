@@ -6,11 +6,12 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/17 16:22:12 by eescalei          #+#    #+#             */
-/*   Updated: 2024/06/20 20:54:52 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/06/24 19:57:40 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philosophers.h"
+
 
 void 	write_status(t_philo *philo, t_philo_status status)
 {
@@ -18,23 +19,29 @@ void 	write_status(t_philo *philo, t_philo_status status)
 	
 	elapsed = gettime(MILLISECONDS) - philo->table->start_simulation;
 	safe_mutex_handle(&philo->table->print_mtx, LOCK);
-	if(THINKING == status)
+	if(THINKING == status && !get_bool(&philo->table->table_mtx, &philo->table->end_simulation))
 		printf("%ld %d is thinking\n", elapsed, philo->philo_id);
-	else if(EATING == status)
+	else if(EATING == status && !get_bool(&philo->table->table_mtx, &philo->table->end_simulation))
 		printf("%ld %d is eating\n", elapsed, philo->philo_id);
-	else if(SLEEPING == status)
+	else if(SLEEPING == status && !get_bool(&philo->table->table_mtx, &philo->table->end_simulation))
 		printf("%ld %d is sleeping\n", elapsed, philo->philo_id);
-	else if(DIED == status)
+	else if(DIED == status && !get_bool(&philo->table->table_mtx, &philo->table->end_simulation))
 		printf("%ld %d died\n", elapsed, philo->philo_id);
-	else if(TAKING_FIRST_FORK == status || TAKING_SECOND_FORK == status)
+	else if((TAKING_FIRST_FORK == status || TAKING_SECOND_FORK == status) && !get_bool(&philo->table->table_mtx, &philo->table->end_simulation))
 		printf("%ld %d has taken a fork\n", elapsed, philo->philo_id);
-	else
-		printf("invalid status code\n");
 	safe_mutex_handle(&philo->table->print_mtx, UNLOCK);
 }
 
-void	exit_error(char *str)
+void clean(t_table *table)
 {
-	printf("Error: %s\n", str);
-	exit(1);
+	if(table->philo != NULL)
+		free(&table->philo[0]);
+	if(table->forks != NULL)
+		free(&table->forks[0]);
+}
+
+void exit_error(char *error)
+{
+	printf("%s", error);
+	return ;
 }

@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 14:55:01 by eescalei          #+#    #+#             */
-/*   Updated: 2024/06/24 18:56:16 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/06/24 19:35:19 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ void	*monitoring(void *data)
 		i = -1;
 		while(++i < table->philo_nbr && !simulation_finished(table))
 		{
-			printf(" %li\n", gettime(MILLISECONDS) - get_long(&table->philo[i].philo_mtx, &table->philo[i].last_meal_time));
 			if(philo_died(table->philo + i))
 			{
 				write_status(table->philo + i, DIED);

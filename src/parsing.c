@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:02:01 by eescalei          #+#    #+#             */
-/*   Updated: 2024/05/16 14:37:58 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/06/24 19:39:42 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ int		valid_input(const char *str)
 	if (*str == '+' || *str == '-')
 	{
 		if (*str == '-')
-			exit_error("Negative numbers not allowed!");// change to exit_error("negative values not acepted")
+		{
+			printf("negative values not acepted");// change to exit_error("negative values not acepted")
+			return (-1);
+		}
 		str++;
 	}
 	while (str[i] >= '0' && str[i] <= '9')
@@ -33,7 +36,10 @@ int		valid_input(const char *str)
 		res = (str[i] - '0') + (res * 10);
 		i++;
 		if(i >= 10)
-			exit_error ("value to big");
+		{
+			printf("value to big");// change to exit_error("negative values not acepted")
+			return (-1);
+		}
 	}
 	return (res);
 }
@@ -50,7 +56,10 @@ int	parsing_input(t_table *table, char **av)
 	if(table->time_to_die < 6e4 
 		|| table->time_to_eat < 6e4 
 		|| table->time_to_sleep < 6e4)
-		exit_error("time to die, eat or sleep must be greater than 60ms");
+		{
+			printf("time to die, eat or sleep must be greater than 60ms");// change to exit_error("negative values not acepted")
+			return (-1);
+		}
 	return (0);
 }
 

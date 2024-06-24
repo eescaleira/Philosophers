@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:57:14 by eescalei          #+#    #+#             */
-/*   Updated: 2024/06/24 17:49:29 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/06/24 19:47:25 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,6 +137,7 @@ void	safe_thread_handle(pthread_t *thread, void *(*start_routine)(void *), void 
 void 	write_status(t_philo *philo, t_philo_status status);
 
 /* exit */
-void	exit_error(char *str);
+void clean(t_table *table);
+void exit_error(char *error);
 
 #endif
