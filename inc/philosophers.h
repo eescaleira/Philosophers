@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/12 11:57:14 by eescalei          #+#    #+#             */
-/*   Updated: 2024/06/23 17:54:50 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/06/24 17:49:29 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ bool simulation_finished(t_table *table);
 void	increase_long(t_mtx *mutex, long *value);
 
 /* sync utils */
+void	*monitoring(void *data);
 bool	all_threads_running(t_mtx *mutex, long *threads, long filo_nbr);
 void	wait_all_thread_ready(t_table *table);
 long	gettime(t_time_code time_code);

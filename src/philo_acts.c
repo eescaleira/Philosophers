@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/20 01:42:56 by eescalei          #+#    #+#             */
-/*   Updated: 2024/06/20 20:55:20 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/06/24 18:52:08 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void eat(t_philo *philo)
 	write_status(philo, EATING);
 	precise_usleep(philo->table->time_to_eat, philo->table);
 	
-	if(philo->table->nbr_limit_meals > 0 && philo->meals_counter >= philo->table->nbr_limit_meals)
+	if(philo->table->nbr_limit_meals > 0 && philo->meals_counter == philo->table->nbr_limit_meals)
 		set_bool(&philo->philo_mtx, &philo->full, true);
 	safe_mutex_handle(&philo->first_fork->fork, UNLOCK);
 	safe_mutex_handle(&philo->second_fork->fork, UNLOCK);

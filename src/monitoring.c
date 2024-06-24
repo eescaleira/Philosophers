@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 14:55:01 by eescalei          #+#    #+#             */
-/*   Updated: 2024/06/23 18:10:29 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/06/24 18:56:16 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,10 @@ bool	philo_died(t_philo *philo)
 {
 	long	elapsed;
 	long	time_to_die;
-	
 	if(get_bool(&philo->philo_mtx, &philo->full))
 		return(false);
-	elapsed = get_time(MILLISECONDS) - get_long(&philo->philo_mtx, &philo->last_meal_time);
-	time_to_die = philo->table->time_to_die;
+	elapsed = gettime(MILLISECONDS) - get_long(&philo->philo_mtx, &philo->last_meal_time);
+	time_to_die = philo->table->time_to_die / 1e3;
 	if(elapsed > time_to_die)
 		return(true);
 	return(false);
@@ -40,27 +39,31 @@ bool	all_threads_running(t_mtx *mutex, long *threads, long filo_nbr)
 	ret = false;
 	safe_mutex_handle(mutex, LOCK);
 	if(*threads == filo_nbr)
-		ret == true;
+		ret = true;
 	safe_mutex_handle(mutex, UNLOCK);
+	return(ret);
 }
 
-void	monitoring(void *data)
+void	*monitoring(void *data)
 {
 	t_table *table;
 	int i;
 
 	table = (t_table *)data;
-	i = -1;
-	while (all_threads_running(&table->table_mtx, &table->threads_running, table->philo_nbr));
+	while (!all_threads_running(&table->table_mtx, &table->threads_running, table->philo_nbr))
 	;
 	while(!simulation_finished(table))
 	{
-		while(++i < table->philo_nbr)
-			if(philo_died(table->philos + i))
+		i = -1;
+		while(++i < table->philo_nbr && !simulation_finished(table))
+		{
+			printf(" %li\n", gettime(MILLISECONDS) - get_long(&table->philo[i].philo_mtx, &table->philo[i].last_meal_time));
+			if(philo_died(table->philo + i))
 			{
-				set_bool(&table->table_mtx, &table->end_simulation, true);
 				write_status(table->philo + i, DIED);
+				set_bool(&table->table_mtx, &table->end_simulation, true);
 			}
+		}
 	}
 	return(NULL);
 }

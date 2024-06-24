@@ -10,7 +10,8 @@ SRC = main.c \
 		meal.c \
 		get_set.c \
 		sync_utils.c \
-		philo_acts.c
+		philo_acts.c \
+		monitoring.c
 
 SRC_PATH = ./src/
 OBJ_PATH = ./obj/
