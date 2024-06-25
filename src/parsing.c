@@ -19,8 +19,7 @@ int	valid_input(const char *str)
 
 	i = 0;
 	res = 0;
-	while ((*str >= 13 && *str <= 9) || *str == ' '
-		|| *str == '\0')
+	while ((*str >= 13 && *str <= 9) || *str == ' ' || *str == '\0')
 		str++;
 	if (*str == '+' || *str == '-')
 	{
@@ -50,8 +49,7 @@ int	parsing_input(t_table *table, char **av)
 	table->nbr_limit_meals = -1;
 	if (NULL != av[5])
 		table->nbr_limit_meals = valid_input(av[5]);
-	if (table->time_to_die < 6e4
-		|| table->time_to_eat < 6e4
+	if (table->time_to_die < 6e4 || table->time_to_eat < 6e4
 		|| table->time_to_sleep < 6e4)
 	{
 		printf("time to die, eat or sleep must be greater than 60ms");

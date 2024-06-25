@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/22 14:55:01 by eescalei          #+#    #+#             */
-/*   Updated: 2024/06/25 19:48:36 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/06/25 20:03:16 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,15 @@ bool	philo_died(t_philo *philo)
 {
 	long	elapsed;
 	long	time_to_die;
+
 	if (get_bool(&philo->philo_mtx, &philo->full))
-		return(false);
-	elapsed = gettime(MILLISECONDS) - get_long(&philo->philo_mtx, &philo->last_meal_time);
+		return (false);
+	elapsed = gettime(MILLISECONDS) - get_long(&philo->philo_mtx,
+			&philo->last_meal_time);
 	time_to_die = philo->table->time_to_die / 1e3;
-	// printf("elapsed %ld\n", elapsed);
-	if(elapsed > time_to_die)
-		return(true);
-	return(false);
+	if (elapsed > time_to_die)
+		return (true);
+	return (false);
 }
 
 void	increase_long(t_mtx *mutex, long *value)
@@ -35,36 +36,36 @@ void	increase_long(t_mtx *mutex, long *value)
 
 bool	all_threads_running(t_mtx *mutex, long *threads, long filo_nbr)
 {
-	bool ret;
-	
+	bool	ret;
+
 	ret = false;
 	safe_mutex_handle(mutex, LOCK);
-	if(*threads == filo_nbr)
+	if (*threads == filo_nbr)
 		ret = true;
 	safe_mutex_handle(mutex, UNLOCK);
-	return(ret);
+	return (ret);
 }
 
 void	*monitoring(void *data)
 {
-	t_table *table;
-	int i;
+	t_table	*table;
+	int		i;
 
 	table = (t_table *)data;
-	while (!all_threads_running(&table->table_mtx, &table->threads_running, table->philo_nbr))
-	;
-	while(!simulation_finished(table))
+	while (!all_threads_running(&table->table_mtx, &table->threads_running,
+			table->philo_nbr))
+		;
+	while (!simulation_finished(table))
 	{
 		i = -1;
-		// printf("monitoring\n");
-		while(++i < table->philo_nbr && !simulation_finished(table))
+		while (++i < table->philo_nbr && !simulation_finished(table))
 		{
-			if(philo_died(table->philo + i))
+			if (philo_died(table->philo + i))
 			{
 				write_status(table->philo + i, DIED);
 				set_bool(&table->table_mtx, &table->end_simulation, true);
 			}
 		}
 	}
-	return(NULL);
+	return (NULL);
 }
