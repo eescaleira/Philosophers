@@ -1,7 +1,7 @@
 NAME = philo
 
 CC = cc 
-FLAGS = -Wall -Werror -Wextra -fsanitize=address	
+FLAGS = -Wall -Werror -Wextra 
 SRC = main.c \
 		parsing.c \
 		suport_funcs.c \

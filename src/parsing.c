@@ -6,27 +6,27 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/16 17:02:01 by eescalei          #+#    #+#             */
-/*   Updated: 2024/06/24 19:39:42 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/06/25 19:44:21 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/philosophers.h"
 
-int		valid_input(const char *str)
+int	valid_input(const char *str)
 {
 	int	res;
-	int i;
+	int	i;
 
 	i = 0;
 	res = 0;
-	while ((*str >= 13 && *str <= 9) || *str == ' ' 
-			|| *str == '\0')
+	while ((*str >= 13 && *str <= 9) || *str == ' '
+		|| *str == '\0')
 		str++;
 	if (*str == '+' || *str == '-')
 	{
 		if (*str == '-')
 		{
-			printf("negative values not acepted");// change to exit_error("negative values not acepted")
+			printf("negative values not acepted");
 			return (-1);
 		}
 		str++;
@@ -35,11 +35,8 @@ int		valid_input(const char *str)
 	{
 		res = (str[i] - '0') + (res * 10);
 		i++;
-		if(i >= 10)
-		{
-			printf("value to big");// change to exit_error("negative values not acepted")
+		if (i >= 10)
 			return (-1);
-		}
 	}
 	return (res);
 }
@@ -51,15 +48,14 @@ int	parsing_input(t_table *table, char **av)
 	table->time_to_eat = valid_input(av[3]) * 1e3;
 	table->time_to_sleep = valid_input(av[4]) * 1e3;
 	table->nbr_limit_meals = -1;
-	if(NULL != av[5])
+	if (NULL != av[5])
 		table->nbr_limit_meals = valid_input(av[5]);
-	if(table->time_to_die < 6e4 
-		|| table->time_to_eat < 6e4 
+	if (table->time_to_die < 6e4
+		|| table->time_to_eat < 6e4
 		|| table->time_to_sleep < 6e4)
-		{
-			printf("time to die, eat or sleep must be greater than 60ms");// change to exit_error("negative values not acepted")
-			return (-1);
-		}
+	{
+		printf("time to die, eat or sleep must be greater than 60ms");
+		return (-1);
+	}
 	return (0);
 }
-
