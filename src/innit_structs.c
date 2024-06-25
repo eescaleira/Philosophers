@@ -6,7 +6,7 @@
 /*   By: eescalei <eescalei@student.42porto.com>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/04/19 14:38:52 by eescalei          #+#    #+#             */
-/*   Updated: 2024/06/25 19:46:50 by eescalei         ###   ########.fr       */
+/*   Updated: 2024/06/25 20:29:19 by eescalei         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ void	innit_struct(t_table *table)
 
 	i = 0;
 	table->start_simulation = false;
+	table->end_simulation = false;
 	table->all_thread_ready = false;
 	table->philo = (t_philo *)safe_malloc(sizeof(t_philo) * table->philo_nbr);
 	safe_mutex_handle(&table->table_mtx, INIT);
